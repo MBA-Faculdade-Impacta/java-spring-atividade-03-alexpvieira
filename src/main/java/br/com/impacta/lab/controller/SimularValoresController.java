@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import br.com.impacta.lab.models.Produto;
 
 @RestController
 @RequestMapping("/simular")
@@ -51,8 +52,63 @@ public class SimularValoresController {
 		 * 
 		 */
 		
+    String retorno = simular(codigoProduto, codTipoPagamento);
+
+    // Produto camisa = new Produto();
+    // camisa.codigo = 1;
+    // camisa.descricao = "Camisa";
+    // camisa.valor = 70.00;
+    // camisa.criarResumo();
 		
-		return ResponseEntity.ok("Hello world !");
+		return ResponseEntity.ok(retorno);
 	}
+
+  public String simular(int codProduto, int codTipoPagamento) {
+    String descricaoProduto = "";
+    String descricaoCondicaoPagamento = "";
+    double valorFinal = 0;
+
+    if (codProduto == 1) {
+      descricaoProduto = "Camisa";
+      valorFinal = 70.00;
+    }
+    else if (codProduto == 2) {
+      descricaoProduto = "Shorts";
+      valorFinal = 57.50;
+    }
+    else if (codProduto == 3) {
+      descricaoProduto = "Meia";
+      valorFinal = 9.99;
+    }
+    else if (codProduto == 4) {
+      descricaoProduto = "Toca";
+      valorFinal = 35.00;
+    }
+    else if (codProduto == 5) {
+      descricaoProduto = "Luvas";
+      valorFinal = 19.50;
+    }
+
+    if (codTipoPagamento == 1) {
+      descricaoCondicaoPagamento = "A vista no dinheiro com 10% de desconto";
+
+      valorFinal = valorFinal - (valorFinal * 0.1);
+    }
+    else if (codTipoPagamento == 2) {
+      descricaoCondicaoPagamento = "A vista no cartão de crédito  com 5% de desconto";
+
+      valorFinal = valorFinal - (valorFinal * 0.05);
+    }
+    else if (codTipoPagamento == 3) {
+      descricaoCondicaoPagamento = "Em duas parcelas sem nenhum desconto";
+    }
+    else if (codTipoPagamento == 4) {
+      descricaoCondicaoPagamento = "Em três vezes com 10% de juros";
+
+      valorFinal = valorFinal - (valorFinal * 1.1);
+    }
+
+    return descricaoProduto + " sendo pago " + descricaoCondicaoPagamento + " custará " + valorFinal + " reais";
+  }
 	
 }
